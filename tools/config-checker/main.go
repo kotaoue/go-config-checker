@@ -25,8 +25,6 @@ func Main() error {
 }
 
 func checkNGWords(name string) error {
-	fmt.Println(strings.Repeat("-", 64))
-	fmt.Printf("check %s\n", name)
 	file, err := os.Open(name)
 	if err != nil {
 		return err
@@ -37,9 +35,8 @@ func checkNGWords(name string) error {
 	for fs.Scan() {
 		i++
 		for _, v := range ngWords() {
-			fmt.Println(fs.Text())
 			if strings.Contains(fs.Text(), v) {
-				return fmt.Errorf("%s found on line:%d. origin:%s", v, i, fs.Text())
+				return fmt.Errorf("%s found on line:%d@%s", v, i, name)
 			}
 		}
 	}
